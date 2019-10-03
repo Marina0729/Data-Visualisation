@@ -200,5 +200,28 @@ ggplot(data = gapminder_1977,
   geom_text(data = gapminder_rich, color = "black", size = 5)                                
 
 
+#saving a plot into a variable and add a new layer
+#labs
 
-             
+rough_plot <- ggplot(data = a_countries, 
+       mapping = aes(x = year, y = lifeExp, color = continent, group = country)) +
+  geom_line() + 
+  facet_wrap( ~ country)
+
+rough_plot + scale_color_brewer(palette = "Dark2")
+
+modified_plot <- rough_plot + 
+  labs(title = "Life Expentancy over time for 'A' countries", 
+       caption = "Data from Gapminder",
+       x = "Year", 
+       y = "Life expextancy", 
+       colour = "Continent") +
+  theme(panel.grid.major = element_blank(), 
+        plot.title = element_text(size = 4), 
+        axis.text.x = element_text(size = 6),
+        axis.text.y = element_text(size = 6))
+
+ggsave("Figures/my_first_plot.png", plot = rough_plot, width = 12, 
+       height = 10, units = "cm") 
+
+ggsave("Figures/my_second_plot.png", plot = modified_plot)
